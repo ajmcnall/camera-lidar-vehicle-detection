@@ -2,7 +2,7 @@
 import os
 from glob import glob
 from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
+import PIL
 import numpy as np
 import argparse
 
@@ -43,7 +43,7 @@ for idx in range(len(files)):
     file = open(savepath + str(idx)+'_image.txt','w')
     snapshot = files[idx]
 
-    img = plt.imread(snapshot)
+    img = PIL.Image.open(snapshot)
 
     proj = np.fromfile(snapshot.replace('_image.jpg', '_proj.bin'), dtype=np.float32)
     proj.resize([3, 4])
@@ -94,4 +94,4 @@ for idx in range(len(files)):
             file.write('%d ' %number)
         file.write('\n')
     file.close()
-    plt.imsave(savepath + str(idx) + '_image.jpg', img)
+    img.save(savepath + str(idx) + '_image.jpg')
